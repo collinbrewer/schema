@@ -1,0 +1,19 @@
+{
+  "name": "schema",
+  "version": "0.0.1",
+  "description": "Schema defines a protocol for using json objects to define arbitrary schemas and a utility for parsing and understanding schemas.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://collinbrewer@bitbucket.org/collinbrewer/schema.git"
+  },
+  "author": "Collin Brewer <collin@brewer-collective.com>",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/collinbrewer/schema#readme",
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  }
+}

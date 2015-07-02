@@ -5,22 +5,26 @@
 
 (function(){
 
+   var registeredByType={};
+
    function Schema(definition, inferred)
    {
       this.definition=definition;
 
       var schemaType=definition.schemaType || inferred;
 
-      return new Schema.registeredByType[schemaType](definition);
+      var SchemaClass=registeredByType[schemaType];
+
+      return new SchemaClass(definition);
    }
 
-   Schema.registeredByType={};
-
    Schema.register=function(type, schemaClass){
-      Schema.registeredByType[type]=schemaClass;
+      registeredByType[type]=schemaClass;
    };
 
    var infer=function(data){
+
+      console.warn("Not yet implemented");
 
       var inferredType;
 
