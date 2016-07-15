@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://collinbrewer@bitbucket.org/collinbrewer/schema.git"
+    "url": "https://github.com/collinbrewer/schema"
   },
   "author": "Collin Brewer <collin@brewer-collective.com>",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/collinbrewer/schema#readme",
+  "homepage": "https://github.com/collinbrewer/schema",
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.2.5"
