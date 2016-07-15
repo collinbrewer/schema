@@ -24,6 +24,8 @@
 
    var infer=function(data){
 
+      var schema={};
+
       console.warn("Not yet implemented");
 
       var inferredType;
@@ -32,9 +34,22 @@
       {
          if(data.constructor===Array)
          {
+            schema.type="array";
+         }
+         else
+         {
+            schema.type="object";
 
+            var value;
+
+            for(var key in data)
+            {
+               value=data[key];
+            }
          }
       }
+
+      return schema;
    };
 
    Schema.infer=infer;

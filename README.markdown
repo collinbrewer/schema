@@ -1,19 +1,24 @@
 # Schema
-Schema defines a protocol for using json objects to define arbitrary schemas and a utility for parsing and understanding schemas.
+Schema uses plain JS objects to define arbitrary schemas, and provides a mechanism for walking abstract schema trees.
 
-It's used by Synth to understand and build the object graph.
+Schema works great on static schemas, but really shines when used with abstract, unpredictable schemas that contain nested formats, or unknown formats.
 
-## Protocol Concept
-The protocol for defining schemas is quite simple, and offers a lot of flexibility for various data formats.  It uses a nested approach where a ```type``` property defines how the schema is treated.
+Schema provides a registry of Schema Classes registered to Schema Types, and a parser.
 
-The predefined schema types are:
-- **collection**: A schema defining a list of entities
-- **entity**: A schema defining the format of an object
-- **property**: A schema defining a single field of an object
+## Registering a Schema Type
+```js
+function CustomSchema(definition) {
+   // do something with definition
+}
+
+Schema.register("custom-schema", CustomSchema);
+```
+
+A JS object that provides a `schemaType` key property defines how the schema is treated.
 
 The following data:
 
-```javascript
+```js
 var data={
    "Todo" : [
       {
@@ -34,35 +39,30 @@ Can be defined explicitly in Schema as:
 
 ```javascript
 var schema={
-   "schemaType": "store",
-   "entities" : [
+   "schemaType": "db",
+   "tables" : [
       {
-         "schemaType" : "entity",
+         "schemaType" : "table",
          "name" : "Todo",
          "properties": [
             {
-               "schemaType" : "property",
-               "name" : "id",
-               "type" : "number"
-            },
-            {
-               "schemaType" : "property",
+               "schemaType" : "field",
                "name" : "title",
                "type" : "string"
             }
          ]
       },
       {
-         "schemaType" : "entity",
+         "schemaType" : "table",
          "name" : "User",
          "properties" : [
             {
-               "schemaType" : "property",
+               "schemaType" : "field",
                "name" : "id",
                "type" : "number"
             },
             {
-               "schemaType" : "property",
+               "schemaType" : "field",
                "name" : "name",
                "type" : "string"
             }
@@ -70,34 +70,4 @@ var schema={
       }
    ]
 }
-```
-
-...Or represented in the basic string format:
-```javascript
-var schema="{Todo:[{id:0,title:''}]}";
-```
-
-For simplicity, you can skip using schemaTypes and Schema will assume a more traditional format of store->collections->properties, or database->tables->fields... or natively, an object of lists of objects
-
-## Usage
-```javascript
-var json={
-   "type" : "store",
-   "Todo" : {
-      "type": "entity",
-      "schema" : {
-
-      }
-   }
-};
-
-var schema=new Schema(json);
-
-var entitiesSchema=schema.get("entities");
-
-var entitySchema=entitiesSchema.get("Todo");
-
-var propertiesSchema=entitySchema.get("properties");
-
-var propertySchema=propertySchema("title");
 ```
