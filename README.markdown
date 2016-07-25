@@ -1,4 +1,6 @@
 # Schema
+[![Dependency Status](https://img.shields.io/david/collinbrewer/schema/master.svg)](https://david-dm.org/collinbrewer/schema.svg)
+
 Schema uses plain JS objects to define arbitrary schemas, and provides a mechanism for walking abstract schema trees.
 
 Schema works great on static schemas, but really shines when used with abstract, unpredictable schemas that contain nested formats, or unknown formats.
