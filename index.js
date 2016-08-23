@@ -1,4 +1,4 @@
-var Schema=require("./src/schema.js");
+var Schema = require('./src/schema.js');
 
 // export
-module.exports=Schema;
+module.exports = Schema;

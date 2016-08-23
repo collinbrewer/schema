@@ -3,57 +3,48 @@
  * A library for describing, manipulating and querying schemas
  */
 
-(function(){
+var registeredByType = {};
 
-   var registeredByType={};
+function Schema (definition, inferred) {
+	this.definition = definition;
 
-   function Schema(definition, inferred)
-   {
-      this.definition=definition;
+	var schemaType = definition.schemaType || inferred;
 
-      var schemaType=definition.schemaType || inferred;
+	var SchemaClass = registeredByType[schemaType];
 
-      var SchemaClass=registeredByType[schemaType];
+	return new SchemaClass(definition);
+}
 
-      return new SchemaClass(definition);
-   }
+Schema.register = function (type, schemaClass) {
+	registeredByType[type] = schemaClass;
+};
 
-   Schema.register=function(type, schemaClass){
-      registeredByType[type]=schemaClass;
-   };
+var infer = function (data) {
+	var schema = {};
 
-   var infer=function(data){
+	console.warn('Not yet implemented');
 
-      var schema={};
+	// var inferredType;
 
-      console.warn("Not yet implemented");
+	if (typeof (data) === 'object') {
+		if (data.constructor === Array) {
+			schema.type = 'array';
+		}
+		else {
+			schema.type = 'object';
 
-      var inferredType;
+			// var value;
+			//
+			// for (var key in data)
+			// {
+			// 	value = data[key];
+			// }
+		}
+	}
 
-      if(typeof(data)==="object")
-      {
-         if(data.constructor===Array)
-         {
-            schema.type="array";
-         }
-         else
-         {
-            schema.type="object";
+	return schema;
+};
 
-            var value;
+Schema.infer = infer;
 
-            for(var key in data)
-            {
-               value=data[key];
-            }
-         }
-      }
-
-      return schema;
-   };
-
-   Schema.infer=infer;
-
-   // export
-   (typeof(module)!=="undefined" ? (module.exports=Schema) : ((typeof(define)!=="undefined" && define.amd) ? define(function(){ return Schema; }) : (window.Schema=Schema)));
-})();
+module.exports = Schema;

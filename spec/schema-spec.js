@@ -1,27 +1,26 @@
-var should=require("chai").should();
-var Schema=require("../index.js");
+var expect = require('chai').expect;
+var Schema = require('../index.js');
 
-describe("Registration", function(){
+describe('Schema', function () {
+	context('#register', function () {
+		it('should register a new schema type', function () {
+			var SchemaClass = function (definition) {
+				this.definition = definition;
+			};
+			SchemaClass.prototype.getValue = function () { return this.definition.value; };
 
-   it("should register a new schema type", function(){
+			Schema.register('custom-schema', SchemaClass);
+		});
 
-      var SchemaClass=function(definition){
-         this.definition=definition;
-      };
-      SchemaClass.prototype.getValue=function(){ return this.definition.value; };
+		it('should map from a schema definition', function () {
+			var definition = {
+				'schemaType': 'custom-schema',
+				'value': 'foo'
+			};
 
-      Schema.register("custom-schema", SchemaClass);
-   });
+			var schema = new Schema(definition);
 
-   it("should map from a schema definition", function(){
-
-      var definition={
-         "schemaType" : "custom-schema",
-         "value" : "foo"
-      };
-
-      var schema=new Schema(definition);
-
-      schema.getValue().should.equal("foo");
-   });
+			expect(schema.getValue()).to.equal('foo');
+		});
+	});
 });
